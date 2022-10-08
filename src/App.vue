@@ -3,17 +3,27 @@ import { onMounted } from "vue";
 const tg = window.Telegram.WebApp;
 onMounted(() => {
   tg.ready();
+  console.log(tg);
 });
 
 const onClose = () => {
   tg.close();
+};
+const showMainButton = () => {
+  if (tg.MainButton.isVisible) {
+    tg.MainButton.hide();
+  } else {
+    tg.MainButton.show();
+  }
 };
 </script>
 
 <template>
   <div>
     <h1>hello!</h1>
-    <button @close="onClose">close</button>
+    <button @click="onClose">close</button>
+    <p>Username: {{ tg.initDataUnsafe?.user?.username }}</p>
+    <button @click="showMainButton">ShowMainBtn</button>
   </div>
 </template>
 
