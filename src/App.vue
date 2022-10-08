@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-const name = ref('')
+const tg = window.Telegram.WebApp;
+const name = ref("");
 onMounted(() => {
-  const tg = ref(window.Telegram.WebApp);
-  const name = tg.value.initDataUnsafe?.user?.username;
-  tg.value.ready();
-  console.log(tg.value);
+  name.value = tg.initDataUnsafe?.user?.username;
+  tg.ready();
+  console.log(name);
 });
 
 const onClose = () => {
