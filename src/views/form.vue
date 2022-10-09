@@ -13,19 +13,19 @@ const onSendData = () => {
     country,
   };
   console.log(JSON.stringify(data.value));
-  Telegram.WebApp.sendData(JSON.stringify(data.value));
+  tg.sendData(JSON.stringify(data.value));
   return;
 };
 
 onMounted(() => {
-  Telegram.WebApp.ready();
-  Telegram.WebApp.MainButton.setParams({
+  tg.ready();
+  tg.MainButton.setParams({
     text: "Отправить данные",
   });
-  Telegram.WebApp.onEvent("MainButtonClicked", onSendData);
+  tg.MainButton.onClick(onSendData);
 });
 onUnmounted(() => {
-  tg.offEvent("MainButtonClicked", onSendData);
+  tg.MainButton.offClick(onSendData);
 });
 const onFormChange = () => {
   if (name.value && country.value) {
