@@ -5,7 +5,7 @@ const tg = window.Telegram.WebApp;
 const name = ref("");
 const cart = reactive([]);
 const totalCartPrice = ref(0);
-const url = "http://localhost:5173/web-data";
+const url = "https://aesbottest.herokuapp.com/web-data";
 const dataToSent = ref({});
 const queryId = ref(null);
 
