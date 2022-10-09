@@ -5,12 +5,12 @@ const tg = window.Telegram.WebApp;
 const name = ref("");
 const cart = reactive([]);
 const totalCartPrice = ref(0);
-const url = "https://aesbottest.herokuapp.com/web-data";
-const dataToSent = ref({});
+const url = "https://aesbottest.herokuapp.com";
+const data = ref({});
 const queryId = ref(null);
 
 const onSendData = () => {
-  dataToSent.value = {
+  data.value = {
     products: catalog.value,
     totalCartPrice,
     queryId: queryId.value,
@@ -20,10 +20,10 @@ const onSendData = () => {
     headers: {
       "Content-Type:": "application/json",
     },
-    body: JSON.stringify(dataToSent.value),
+    body: JSON.stringify(data.value),
   });
-  // console.log(JSON.stringify(dataToSent.value));
-  // tg.sendData(JSON.stringify(dataToSent.value));
+  // console.log(JSON.stringify(data.value));
+  // tg.sendData(JSON.stringify(data.value));
   // return;
 };
 
