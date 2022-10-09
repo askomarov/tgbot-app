@@ -22,7 +22,7 @@ const showMainButton = () => {
     tg.MainButton.show();
   }
 };
-const catalog = [
+const catalog = reactive([
   {
     id: 1,
     name: "Leanne Graham",
@@ -47,22 +47,22 @@ const catalog = [
     exprience: 33,
     count: 0,
   },
-];
+]);
 const onAddBtnClick = (payload) => {
-  let alredyAdded = cart.find((item) => item.id === payload.id);
+  let alredyAdded = catalog.find((item) => item.id === payload.id);
   if (alredyAdded) {
-    alredyAdded.count += 1;
-    return cart;
+    return (alredyAdded.count += 1);
+    // return cart;
   } else {
-    payload.count = 1;
-    return cart.push(payload);
+    return (payload.count = 1);
+    // return cart.push(payload);
   }
 };
-watch(cart, (newValue) => {
-  totalCartPrice.value = cart.reduce((acc, item) => {
+watch(catalog, (newValue) => {
+  totalCartPrice.value = catalog.reduce((acc, item) => {
     return (acc += item.exprience * item.count);
   }, 0);
-  if (cart.length > 0) {
+  if (totalCartPrice.value > 0) {
     console.log("show main btn");
     tg.MainButton.show();
     tg.MainButton.setParams({
@@ -73,7 +73,6 @@ watch(cart, (newValue) => {
     tg.MainButton.hide();
   }
 });
-
 </script>
 
 <template>

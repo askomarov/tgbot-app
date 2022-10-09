@@ -11,7 +11,8 @@ defineProps({
     <!-- <img class="catalog-item__img" :src="item.img" width="60" height="60" /> -->
     <h3 class="catalog-item__title">{{ item.name }}</h3>
     <p class="catalog-item__descr">
-      {{ item.username }}, email: {{ item.email }}
+      Name: {{ item.username }}, email: {{ item.email }}
+      <span>Count: {{ item.count }}</span>
     </p>
     <div class="catalog-item__price">
       <span
