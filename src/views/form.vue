@@ -1,19 +1,33 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import HelloWorld from "../components/HelloWorld.vue";
 const tg = window.Telegram.WebApp;
 const isFormEmpty = ref(true);
 const name = ref(null);
 const country = ref(null);
 const form = ref(null);
+const data = ref({});
+
+const onSendData = () => {
+  data.value = {
+    name,
+    country,
+  };
+  console.log(JSON.stringify(data.value));
+  tg.sendData(JSON.stringify(data.value));
+};
 
 onMounted(() => {
   tg.ready();
   tg.MainButton.setParams({
     text: "Отправить данные",
   });
+
+  tg.onEvent("MainButtonClicked", onSendData);
 });
-computed(() => {});
+onUnmounted(() => {
+  tg.offEvent("MainButtonClicked", onSendData);
+});
 const onFormChange = () => {
   if (name.value && country.value) {
     isFormEmpty.value = false;
@@ -31,7 +45,7 @@ const onFormChange = () => {
     <p>Form empty: {{ isFormEmpty }}</p>
     <p>{{ name || "null" }}</p>
     <p>{{ country || "null" }}</p>
-    <form @change="onFormChange" ref="form">
+    <form @change="onFormChange" @submit.prevent="onSendData" ref="form">
       <label for="name">
         Введите имя:
         <input type="text" name="name" id="name" v-model="name" />
