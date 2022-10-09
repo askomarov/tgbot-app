@@ -1,17 +1,41 @@
 <script setup>
-import { ref, onMounted, watch, reactive } from "vue";
+import { ref, onMounted, watch, reactive, onUnmounted } from "vue";
 import CatalogItem from "../components/CatalogItem.vue";
 const tg = window.Telegram.WebApp;
 const name = ref("");
-
 const cart = reactive([]);
 const totalCartPrice = ref(0);
+const url = "http://localhost:5173/web-data";
+const dataToSent = ref({});
+const queryId = ref(null);
+
+const onSendData = () => {
+  dataToSent.value = {
+    products: catalog.value,
+    totalCartPrice,
+    queryId: queryId.value,
+  };
+  fetch(`${url}`, {
+    method: "POST",
+    headers: {
+      "Content-Type:": "application/json",
+    },
+    body: JSON.stringify(dataToSent.value),
+  });
+  // console.log(JSON.stringify(dataToSent.value));
+  // tg.sendData(JSON.stringify(dataToSent.value));
+  // return;
+};
 
 onMounted(() => {
   name.value = tg.initDataUnsafe?.user?.username;
+  queryId.value = tg.initDataUnsafe?.query_id;
   tg.ready();
+  tg.MainButton.onClick(onSendData);
 });
-
+onUnmounted(() => {
+  tg.MainButton.offClick(onSendData);
+});
 const onClose = () => {
   tg.close();
 };
@@ -77,6 +101,7 @@ watch(catalog, (newValue) => {
 
 <template>
   <div>
+    <button @click="onSendData">send data test</button>
     <h1>hello!</h1>
     <p>Cart price: {{ totalCartPrice }}</p>
     <button @click="onClose">close</button>
