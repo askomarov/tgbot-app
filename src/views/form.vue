@@ -13,17 +13,17 @@ const onSendData = () => {
     country,
   };
   console.log(JSON.stringify(data.value));
-  tg.sendData(JSON.stringify(data.value));
+  Telegram.WebApp.sendData(JSON.stringify(data.value));
+  return;
 };
 
-tg.ready();
 onMounted(() => {
-  tg.MainButton.setParams({
+  Telegram.WebApp.ready();
+  Telegram.WebApp.MainButton.setParams({
     text: "Отправить данные",
   });
-
+  Telegram.WebApp.onEvent("MainButtonClicked", onSendData);
 });
-tg.onEvent("MainButtonClicked", onSendData);
 onUnmounted(() => {
   tg.offEvent("MainButtonClicked", onSendData);
 });
@@ -40,10 +40,6 @@ const onFormChange = () => {
 <template>
   <div>
     <h1>Form page</h1>
-    <HelloWorld msg="Tg bot" />
-    <p>Form empty: {{ isFormEmpty }}</p>
-    <p>{{ name || "null" }}</p>
-    <p>{{ country || "null" }}</p>
     <form @change="onFormChange">
       <label for="name">
         Введите имя:
@@ -54,6 +50,10 @@ const onFormChange = () => {
         <option value="russia">Россия</option>
       </select>
     </form>
+    <HelloWorld msg="Tg bot" />
+    <p>Form empty: {{ isFormEmpty }}</p>
+    <p>{{ name || "null" }}</p>
+    <p>{{ country || "null" }}</p>
   </div>
 </template>
 <style>
