@@ -16,14 +16,14 @@ const onSendData = () => {
   tg.sendData(JSON.stringify(data.value));
 };
 
+tg.ready();
 onMounted(() => {
-  tg.ready();
   tg.MainButton.setParams({
     text: "Отправить данные",
   });
 
-  tg.onEvent("MainButtonClicked", onSendData);
 });
+tg.onEvent("MainButtonClicked", onSendData);
 onUnmounted(() => {
   tg.offEvent("MainButtonClicked", onSendData);
 });
