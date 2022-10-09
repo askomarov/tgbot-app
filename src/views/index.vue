@@ -1,11 +1,15 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
+import CatalogItem from "../components/CatalogItem.vue";
 const tg = window.Telegram.WebApp;
 const name = ref("");
+
+const cart = reactive([]);
+const totalCartPrice = ref(0);
+
 onMounted(() => {
   name.value = tg.initDataUnsafe?.user?.username;
   tg.ready();
-  console.log(name);
 });
 
 const onClose = () => {
@@ -18,15 +22,75 @@ const showMainButton = () => {
     tg.MainButton.show();
   }
 };
+const catalog = [
+  {
+    id: 1,
+    name: "Leanne Graham",
+    username: "Bret",
+    email: "Sincere@april.biz",
+    exprience: 100,
+    count: 0,
+  },
+  {
+    id: 2,
+    name: "Ervin Howell",
+    username: "Antonette",
+    email: "Shanna@melissa.tv",
+    exprience: 68,
+    count: 0,
+  },
+  {
+    id: 3,
+    name: "Clementine Bauch",
+    username: "Samantha",
+    email: "Nathan@yesenia.net",
+    exprience: 33,
+    count: 0,
+  },
+];
+const onAddBtnClick = (payload) => {
+  let alredyAdded = cart.find((item) => item.id === payload.id);
+  if (alredyAdded) {
+    alredyAdded.count += 1;
+    return cart;
+  } else {
+    payload.count = 1;
+    return cart.push(payload);
+  }
+};
+watch(cart, (newValue) => {
+  totalCartPrice.value = cart.reduce((acc, item) => {
+    return (acc += item.exprience * item.count);
+  }, 0);
+  if (cart.length > 0) {
+    console.log("show main btn");
+    tg.MainButton.show();
+    tg.MainButton.setParams({
+      text: `Купить ${totalCartPrice.value}`,
+    });
+  } else {
+    console.log("hide main btn");
+    tg.MainButton.hide();
+  }
+});
 
 </script>
 
 <template>
   <div>
     <h1>hello!</h1>
+    <p>Cart price: {{ totalCartPrice }}</p>
     <button @click="onClose">close</button>
     <p>Username: {{ name || "default" }}</p>
     <button @click="showMainButton">ShowMainBtn</button>
+    <div class="catalog">
+      <CatalogItem
+        v-for="item in catalog"
+        :key="item.id"
+        :item="item"
+        @onAddBtnClick="onAddBtnClick"
+      ></CatalogItem>
+    </div>
   </div>
 </template>
 
