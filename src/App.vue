@@ -1,44 +1,12 @@
-<script setup>
-import { ref, onMounted } from "vue";
-const tg = window.Telegram.WebApp;
-const name = ref("");
-onMounted(() => {
-  name.value = tg.initDataUnsafe?.user?.username;
-  tg.ready();
-  console.log(name);
-});
-
-const onClose = () => {
-  tg.close();
-};
-const showMainButton = () => {
-  if (tg.MainButton.isVisible) {
-    tg.MainButton.hide();
-  } else {
-    tg.MainButton.show();
-  }
-};
-</script>
-
 <template>
   <div>
-    <h1>hello!</h1>
-    <button @click="onClose">close</button>
-    <p>Username: {{ name || "default" }}</p>
-    <button @click="showMainButton">ShowMainBtn</button>
+    <nav>
+      <router-link class="btn" to="/">Home</router-link>
+      <router-link class="btn" to="/form">Form</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
