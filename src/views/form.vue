@@ -5,7 +5,6 @@ const tg = window.Telegram.WebApp;
 const isFormEmpty = ref(true);
 const name = ref(null);
 const country = ref(null);
-const form = ref(null);
 const data = ref({});
 
 const onSendData = () => {
@@ -45,7 +44,7 @@ const onFormChange = () => {
     <p>Form empty: {{ isFormEmpty }}</p>
     <p>{{ name || "null" }}</p>
     <p>{{ country || "null" }}</p>
-    <form @change="onFormChange" @submit.prevent="onSendData" ref="form">
+    <form @change="onFormChange">
       <label for="name">
         Введите имя:
         <input type="text" name="name" id="name" v-model="name" />
