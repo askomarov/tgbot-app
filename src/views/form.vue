@@ -3,8 +3,8 @@ import { ref, onMounted, computed } from "vue";
 import HelloWorld from "../components/HelloWorld.vue";
 const tg = window.Telegram.WebApp;
 const isFormEmpty = ref(true);
-const name = ref("");
-const country = ref("");
+const name = ref(null);
+const country = ref(null);
 const form = ref(null);
 
 onMounted(() => {
@@ -15,10 +15,11 @@ onMounted(() => {
 });
 computed(() => {});
 const onFormChange = () => {
-  if (name || country) {
+  if (name.value && country.value) {
     isFormEmpty.value = false;
     tg.MainButton.show();
   } else {
+    isFormEmpty.value = true;
     tg.MainButton.hide();
   }
 };
@@ -27,6 +28,9 @@ const onFormChange = () => {
   <div>
     <h1>Form page</h1>
     <HelloWorld msg="Tg bot" />
+    <p>Form empty: {{ isFormEmpty }}</p>
+    <p>{{ name || "null" }}</p>
+    <p>{{ country || "null" }}</p>
     <form @change="onFormChange" ref="form">
       <label for="name">
         Введите имя:
