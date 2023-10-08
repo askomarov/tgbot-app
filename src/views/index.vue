@@ -5,7 +5,9 @@ const tg = window.Telegram.WebApp;
 const name = ref("");
 const cart = reactive([]);
 const totalCartPrice = ref(0);
-const url = "https://aesbottest.herokuapp.com";
+// больше нет heroku бесплатного - он теперь платный
+const url = "https://tgbotapp.netlify.app/"
+// const url = "https://aesbottest.herokuapp.com";
 const data = ref({});
 const queryId = ref(null);
 
