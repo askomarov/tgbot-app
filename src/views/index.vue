@@ -17,7 +17,8 @@ const onSendData = () => {
     totalCartPrice,
     queryId: queryId.value,
   };
-  tg.sendData(data)
+  tg.showAlert('done!')
+  tg.sendData(data.value)
   tg.showAlert('done!')
   // fetch(`${url}`, {
   //   method: "POST",
