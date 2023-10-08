@@ -6,11 +6,13 @@ const isFormEmpty = ref(true);
 const name = ref(null);
 const country = ref(null);
 const data = ref({});
+const date = ref()
 
 const onSendData = () => {
   data.value = {
     name : name.value,
-    country: country.value
+    country: country.value,
+    date: date.value
   };
   console.log(JSON.stringify(data.value));
   tg.sendData(JSON.stringify(data.value));
@@ -50,11 +52,13 @@ const onFormChange = () => {
         <option value="serbia">Сербия</option>
         <option value="russia">Россия</option>
       </select>
+      <input v-model="date" type="date" name="date" id="date">
     </form>
     <!-- <HelloWorld msg="Tg bot" /> -->
     <p>Form empty: {{ isFormEmpty }}</p>
     <p>{{ name || "null" }}</p>
     <p>{{ country || "null" }}</p>
+    <p>{{ date || "null" }}</p>
   </div>
 </template>
 <style>

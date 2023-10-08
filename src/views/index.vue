@@ -106,12 +106,12 @@ watch(catalog, (newValue) => {
 
 <template>
   <div>
-    <button @click="onSendData">send data test</button>
+    <button type="button" @click="onSendData">send data test</button>
     <h1>hello!</h1>
     <p>Cart price: {{ totalCartPrice }}</p>
-    <button @click="onClose">close</button>
+    <button type="button" @click="onClose">close</button>
     <p>Username: {{ name || "default" }}</p>
-    <button @click="showMainButton">ShowMainBtn</button>
+    <button type="button" @click="showMainButton">ShowMainBtn</button>
     <div class="catalog">
       <CatalogItem
         v-for="item in catalog"
