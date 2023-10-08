@@ -17,13 +17,15 @@ const onSendData = () => {
     totalCartPrice,
     queryId: queryId.value,
   };
-  fetch(`${url}`, {
-    method: "POST",
-    headers: {
-      "Content-Type:": "application/json",
-    },
-    body: JSON.stringify(data.value),
-  });
+  tg.sendData(data)
+  tg.showAlert('done!')
+  // fetch(`${url}`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type:": "application/json",
+  //   },
+  //   body: JSON.stringify(data.value),
+  // });
   // console.log(JSON.stringify(data.value));
   // tg.sendData(JSON.stringify(data.value));
   // return;
