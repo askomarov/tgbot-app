@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from "vue";
-import HelloWorld from "../components/HelloWorld.vue";
+// import HelloWorld from "../components/HelloWorld.vue";
 const tg = window.Telegram.WebApp;
 const isFormEmpty = ref(true);
 const name = ref(null);
@@ -9,8 +9,8 @@ const data = ref({});
 
 const onSendData = () => {
   data.value = {
-    name,
-    country,
+    name : name.value,
+    country: country.value
   };
   console.log(JSON.stringify(data.value));
   tg.sendData(JSON.stringify(data.value));
@@ -22,6 +22,7 @@ onMounted(() => {
   tg.MainButton.setParams({
     text: "Отправить данные",
   });
+  tg.MainButton.hide();
   tg.MainButton.onClick(onSendData);
 });
 onUnmounted(() => {
@@ -41,7 +42,7 @@ const onFormChange = () => {
   <div>
     <h1>Form page</h1>
     <form @change="onFormChange">
-      <label for="name">
+      <label>
         Введите имя:
         <input type="text" name="name" id="name" v-model="name" />
       </label>
@@ -50,7 +51,7 @@ const onFormChange = () => {
         <option value="russia">Россия</option>
       </select>
     </form>
-    <HelloWorld msg="Tg bot" />
+    <!-- <HelloWorld msg="Tg bot" /> -->
     <p>Form empty: {{ isFormEmpty }}</p>
     <p>{{ name || "null" }}</p>
     <p>{{ country || "null" }}</p>

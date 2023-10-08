@@ -6,6 +6,7 @@ const name = ref("");
 const cart = reactive([]);
 const totalCartPrice = ref(0);
 // больше нет heroku бесплатного - он теперь платный
+//
 const url = "https://tgbotapp.netlify.app/"
 // const url = "https://aesbottest.herokuapp.com";
 const data = ref({});
