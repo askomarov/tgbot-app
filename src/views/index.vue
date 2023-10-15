@@ -79,21 +79,21 @@ const catalog = [
     name: "Audi A3 Cabrio",
     price: 45,
     count: 0,
-    img: "/src/assets/audi.webp",
+    img: "./audi.webp",
   },
   {
     id: 2,
     name: "Mini Cooper Cabrio",
     price: 50,
     count: 0,
-    img: "/src/assets/mini.webp",
+    img: "./mini.webp",
   },
   {
     id: 3,
     name: "Renault Laguna",
     price: 20,
     count: 0,
-    img: "/src/assets/renault.webp",
+    img: "./renault.webp",
   },
 ];
 const onAddBtnClick = (payload) => {
