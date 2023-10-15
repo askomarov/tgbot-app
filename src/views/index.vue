@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, onBeforeMount } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import CatalogItem from "../components/CatalogItem.vue";
 // import { GoogleSpreadsheet } from "google-spreadsheet";
 // import credentials from "../../rentcarns.json";
@@ -47,12 +47,15 @@ const onSendData = async () => {
   // console.log(content);
   // inputName.value = '';
   // tg.sendData(JSON.stringify(data.value));
-  tg.showAlert("done!");
+  tg.showAlert("Заявка отправлена!");
+  date.value = "";
+  selectedCar = "";
+  tg.close();
 };
 
-onBeforeMount(() => {
-  // accessSpreadSheet();
-});
+// onBeforeMount(() => {
+// accessSpreadSheet();
+// });
 
 onMounted(() => {
   name.value = tg.initDataUnsafe?.user?.username;
@@ -100,6 +103,16 @@ const onAddBtnClick = (payload) => {
   console.log(payload);
   selectedCar.value = payload;
 };
+watch(date, (newValue) => {
+  if (date) {
+    tg.MainButton.show();
+    tg.MainButton.setParams({
+      text: `Отправить заявку`,
+    });
+  } else {
+    tg.MainButton.hide();
+  }
+});
 </script>
 
 <template>
@@ -115,19 +128,32 @@ const onAddBtnClick = (payload) => {
         @onAddBtnClick="onAddBtnClick"
       ></CatalogItem>
     </div>
-    <div v-show="selectedCar">
-      <VueDatePicker
-        v-model="date"
-        range
-        placeholder="Choose date"
-        :enable-time-picker="false"
-        uid="bookdate"
-      />
-    </div>
-    <button v-show="date" class="px-3 py-2 border" type="button">
+    <Transition>
+      <div v-show="selectedCar">
+        <h3 class="font-semibold text-xl mb-2">Select date or range</h3>
+        <VueDatePicker
+          v-model="date"
+          range
+          placeholder="Choose date"
+          :enable-time-picker="false"
+          uid="bookdate"
+        />
+      </div>
+    </Transition>
+    <!-- <button v-show="date" class="px-3 py-2 border" type="button">
       Send request
-    </button>
+    </button> -->
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
