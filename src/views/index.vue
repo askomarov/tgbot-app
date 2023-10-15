@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted, onBeforeMount } from "vue";
 import CatalogItem from "../components/CatalogItem.vue";
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import credentials from "../../rentcarns.json";
+// import { GoogleSpreadsheet } from "google-spreadsheet";
+// import credentials from "../../rentcarns.json";
 import VueDatePicker from "@vuepic/vue-datepicker";
 // import { JWT } from 'google-auth-library';
 
